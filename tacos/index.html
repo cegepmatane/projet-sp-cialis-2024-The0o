@@ -32,6 +32,17 @@
         objects = [cube]
 
         var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
+        var previousY;
+
+        dragControls.addEventListener('dragstart', function(event){
+            previousY = event.object.position.y;
+
+        });
+
+        dragControls.addEventListener('drag', function(event){
+            event.object.position.y = previousY;
+            previousY = event.object.position.y;
+        });
 
         animate();
         
