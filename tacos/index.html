@@ -7,6 +7,7 @@
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="DragControls.js"></script>
     <script>
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -27,7 +28,11 @@
             cube.rotation.y += 0.01;
             renderer.render(scene, camera);
         }
-        
+
+        objects = [cube]
+
+        var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
+
         animate();
         
     </script>
