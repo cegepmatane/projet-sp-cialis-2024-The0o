@@ -25,11 +25,11 @@
         groundBody.position.set(100, 100, 100);
         world.addBody(groundBody);
 
-        var cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+        /*var cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
         var cubeBody = new CANNON.Body({ mass: 1 });
         cubeBody.addShape(cubeShape);
         cubeBody.position.set(0, 1, 5);
-        world.addBody(cubeBody);
+        world.addBody(cubeBody);*/
 
         var geometry = new THREE.BoxGeometry();
         var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
@@ -57,10 +57,30 @@
             previousY = event.object.position.y;
         });
 
+        var listeCubePhysique = []
+        var listeCubeThree = []
+
         renderer.domElement.addEventListener('contextmenu', function(event) {
             event.preventDefault();
             console.log("Clic droit");
+            createNewCube()
+            
         });
+
+        function createNewCube() {
+            let cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+            let cubeBody = new CANNON.Body({ mass: 1 });
+            cubeBody.addShape(cubeShape);
+            cubeBody.position.set(0, 1, 5);
+            listeCubePhysique.push(cubeBody)
+            world.addBody(cubeBody);
+
+            let geometry = new THREE.BoxGeometry();
+            let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            let cube = new THREE.Mesh(geometry, material);
+            listeCubeThree.push(cube)
+            scene.add(cube);
+        }
 
         camera.position.z = 5;
 
@@ -71,7 +91,9 @@
 
             groundBody.position.copy(circle.position);
             world.step(1 / 60);
-            cube.position.copy(cubeBody.position);
+            for (let i = 0; i < listeCubeThree.length; i++) {
+                listeCubeThree[i].position.copy(listeCubePhysique[i].position);
+            }
 
             renderer.render(scene, camera);
         }
