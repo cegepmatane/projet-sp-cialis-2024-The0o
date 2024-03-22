@@ -20,14 +20,16 @@
         var cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
-        var circleGeometry = new THREE.CircleGeometry(1, 32); // Rayon de 1, 32 segments
-        var circleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // Couleur verte
-        var circle = new THREE.Mesh(circleGeometry, circleMaterial);
-        circle.position.set(0, -1.5, 0);
-        circle.rotation.x = -Math.PI / 2;
-        scene.add(circle);
+        camera.position.z = 5;
 
-        objects = [cube, circle]
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        objects = [cube]
 
         var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
         var previousY;
@@ -41,20 +43,6 @@
             event.object.position.y = previousY;
             previousY = event.object.position.y;
         });
-
-        renderer.domElement.addEventListener('contextmenu', function(event) {
-            event.preventDefault();
-            console.log("Clic droit");
-        });
-
-        camera.position.z = 5;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        }
 
         animate();
         
