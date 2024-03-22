@@ -71,15 +71,16 @@
             let cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
             let cubeBody = new CANNON.Body({ mass: 1 });
             cubeBody.addShape(cubeShape);
-            cubeBody.position.set(0, 1, 5);
+            console.log(cube.position);
+            cubeBody.position.set(cube.position.x, 1, 5);
             listeCubePhysique.push(cubeBody)
             world.addBody(cubeBody);
 
             let geometry = new THREE.BoxGeometry();
             let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-            let cube = new THREE.Mesh(geometry, material);
-            listeCubeThree.push(cube)
-            scene.add(cube);
+            let cube2 = new THREE.Mesh(geometry, material);
+            listeCubeThree.push(cube2)
+            scene.add(cube2);
         }
 
         camera.position.z = 5;
