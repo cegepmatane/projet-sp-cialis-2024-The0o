@@ -47,16 +47,6 @@
         var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
         var previousY;
 
-        dragControls.addEventListener('dragstart', function(event){
-            previousY = event.object.position.y;
-
-        });
-
-        dragControls.addEventListener('drag', function(event){
-            event.object.position.y = previousY;
-            previousY = event.object.position.y;
-        });
-
         var listeCubePhysique = []
         var listeCubeThree = []
 
@@ -72,7 +62,7 @@
             let cubeBody = new CANNON.Body({ mass: 1 });
             cubeBody.addShape(cubeShape);
             console.log(cube.position);
-            cubeBody.position.set(cube.position.x, 1, 5);
+            cubeBody.position.set(cube.position.x, cube.position.y, 5);
             listeCubePhysique.push(cubeBody)
             world.addBody(cubeBody);
 
