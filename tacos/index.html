@@ -7,14 +7,29 @@
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cannon@0.6.2/build/cannon.js"></script>
     <script src="DragControls.js"></script>
     <script type="module">
-        import * as CANNON from './node_modules/cannon/build/cannon.js'
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
+
+        var world = new CANNON.World();
+        world.gravity.set(0, 0, -9.82);
+
+        var groundShape = new CANNON.Plane();
+        var groundBody = new CANNON.Body({ mass: 0 });
+        groundBody.addShape(groundShape);
+        groundBody.position.set(100, 100, 100);
+        world.addBody(groundBody);
+
+        var cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+        var cubeBody = new CANNON.Body({ mass: 1 });
+        cubeBody.addShape(cubeShape);
+        cubeBody.position.set(0, 1, 5);
+        world.addBody(cubeBody);
 
         var geometry = new THREE.BoxGeometry();
         var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
@@ -24,8 +39,7 @@
         var circleGeometry = new THREE.CircleGeometry(1, 32);
         var circleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         var circle = new THREE.Mesh(circleGeometry, circleMaterial);
-        circle.position.set(0, -1.5, 0);
-        circle.rotation.x = -Math.PI / 2;
+        circle.position.set(0, -1.5, -5);
         scene.add(circle);
 
         let objects = [cube, circle]
@@ -54,6 +68,11 @@
             requestAnimationFrame(animate);
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
+
+            groundBody.position.copy(circle.position);
+            world.step(1 / 60);
+            cube.position.copy(cubeBody.position);
+
             renderer.render(scene, camera);
         }
 
