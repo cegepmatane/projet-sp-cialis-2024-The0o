@@ -8,7 +8,8 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="DragControls.js"></script>
-    <script>
+    <script type="module">
+        import * as CANNON from './node_modules/cannon/build/cannon.js'
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         var renderer = new THREE.WebGLRenderer();
@@ -27,7 +28,7 @@
         circle.rotation.x = -Math.PI / 2;
         scene.add(circle);
 
-        objects = [cube, circle]
+        let objects = [cube, circle]
 
         var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
         var previousY;
