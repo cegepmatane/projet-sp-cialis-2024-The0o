@@ -42,7 +42,7 @@
         circle.position.set(0, -1.5, -5);
         scene.add(circle);
 
-        let objects = [cube, circle]
+        let objects = [cube]
 
         var dragControls = new THREE.DragControls(objects, camera, renderer.domElement);
         var previousY;
@@ -66,7 +66,7 @@
             listeCubePhysique.push(cubeBody)
             world.addBody(cubeBody);
 
-            let geometry = new THREE.BoxGeometry();
+            let geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
             let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
             let cube2 = new THREE.Mesh(geometry, material);
             listeCubeThree.push(cube2)
