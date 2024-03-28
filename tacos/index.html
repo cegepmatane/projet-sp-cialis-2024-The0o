@@ -6,6 +6,66 @@
     <title>Three.js</title>
 </head>
 <body>
+    <style>
+        #listeActions {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #listeNourriture {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 20%);
+        }
+
+        #listeNourriture div {
+            text-align: center;
+            border-width: 2px;
+            border-style: solid;
+            border-radius: 5px;
+        }
+
+        #viande {
+            border-color: rgb(93, 47, 6);
+        }
+
+        #gruyere {
+            border-color: rgb(224, 202, 0);
+        }
+
+        #salade {
+            border-color: rgb(4, 226, 82);
+        }
+
+        #tomate {
+            border-color: rgb(204, 13, 13);
+        }
+
+        .selected {
+            background-color: #ffffffaa;
+        }
+
+        * {
+            color: white;
+        }
+    </style>
+    <div id="listeActions">
+        <div id="listeNourriture">
+            <div id="viande" class="selected">
+                Viande
+            </div>
+            <div id="gruyere">
+                Gruyère
+            </div>
+            <div id="tomate">
+                Tomates
+            </div>
+            <div id="salade">
+                Salade
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cannon@0.6.2/build/cannon.js"></script>
     <script src="DragControls.js"></script>
