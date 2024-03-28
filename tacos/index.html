@@ -70,6 +70,22 @@
     <script src="https://cdn.jsdelivr.net/npm/cannon@0.6.2/build/cannon.js"></script>
     <script src="DragControls.js"></script>
     <script type="module">
+        var elementSelected = "viande"
+
+        document.getElementById("salade").addEventListener("click", newElementSelected)
+        document.getElementById("tomate").addEventListener("click", newElementSelected)
+        document.getElementById("viande").addEventListener("click", newElementSelected)
+        document.getElementById("gruyere").addEventListener("click", newElementSelected)
+
+        function newElementSelected(element) {
+            document.getElementById("salade").classList = []
+            document.getElementById("tomate").classList = []
+            document.getElementById("viande").classList = []
+            document.getElementById("gruyere").classList = []
+            element.originalTarget.classList.add("selected")
+            elementSelected = element.originalTarget.id
+        }
+
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         var renderer = new THREE.WebGLRenderer();
@@ -125,9 +141,17 @@
             cubeBody.position.set(cube.position.x, cube.position.y, 5);
             listeCubePhysique.push(cubeBody)
             world.addBody(cubeBody);
-
             let geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-            let material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            let material = new THREE.MeshBasicMaterial({ color: 0x5d2f06 });
+            if (elementSelected === "gruyere") {
+                material = new THREE.MeshBasicMaterial({ color: 0xe0ca00 });
+            }
+            else if (elementSelected === "tomate") {
+                material = new THREE.MeshBasicMaterial({ color: 0xcc0d0d });
+            }
+            else if (elementSelected === "salade") {
+                material = new THREE.MeshBasicMaterial({ color: 0x04e252 });
+            }
             let cube2 = new THREE.Mesh(geometry, material);
             listeCubeThree.push(cube2)
             scene.add(cube2);
