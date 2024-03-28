@@ -122,19 +122,22 @@
         }
 
         function newTacos() {
-            clearInterval(timerInterval);
-            noterTacos()
-            let obj
-            for( var i = scene.children.length - 1; i >= 0; i--) { 
-                obj = scene.children[i];
-                if (obj.name === "test") {
-                    scene.remove(obj); 
+            console.log(listeCubePhysique, listeCubeThree);
+            if (listeCubePhysique.length !== 0) {
+                clearInterval(timerInterval);
+                noterTacos()
+                let obj
+                for( var i = scene.children.length - 1; i >= 0; i--) { 
+                    obj = scene.children[i];
+                    if (obj.name === "viande" || obj.name === "gruyere" || obj.name === "salade" || obj.name === "tomate") {
+                        scene.remove(obj); 
+                    }
                 }
+                elementSelected = "viande"
+                temps = 0
+                listeCubePhysique = []
+                listeCubeThree = []
             }
-            elementSelected = "viande"
-            temps = 0
-            listeCubePhysique = []
-            listeCubeThree = []
         }
 
         function noterTacos() {
@@ -145,11 +148,43 @@
             else {
                 differenceTemps = 100 - temps
             }
-            let noteCuisson = differenceTemps / 5
             let nbElementsTacos = detecterCollisions()
             let nbElementsHorsTacos = listeCubePhysique.length - nbElementsTacos
             let currentTime = Date.now() - startTime
+            let harmonie = getHarmonie()
+
+            let noteCuisson = differenceTemps / 5
+            let noteHarmonie = 20 - harmonie
             console.log("TEMPS " + currentTime);
+        }
+
+        function getHarmonie() {
+            let nbCubesViande = 0;
+            let nbCubesTomate = 0;
+            let nbCubesGruyere = 0;
+            let nbCubesSalade = 0;
+            for (let i = 0; i < listeCubeThree.length; i++) {
+                let cube = listeCubeThree[i];
+                switch (cube.name) {
+                    case "viande":
+                        nbCubesViande++;
+                        break;
+                    case "tomate":
+                        nbCubesTomate++;
+                        break;
+                    case "gruyere":
+                        nbCubesGruyere++;
+                        break;
+                    case "salade":
+                        nbCubesSalade++;
+                        break;
+                }
+            }
+            let moyenneHarmonie = (nbCubesGruyere + nbCubesSalade + nbCubesTomate + nbCubesViande) / 4
+            let min = Math.min(nbCubesGruyere, nbCubesSalade, nbCubesTomate, nbCubesViande)
+            let max = Math.max(nbCubesGruyere, nbCubesSalade, nbCubesTomate, nbCubesViande)
+            console.log(nbCubesGruyere, nbCubesSalade, nbCubesTomate, nbCubesViande);
+            return Math.max(moyenneHarmonie - min, max - moyenneHarmonie)
         }
 
         function startTimer() {
@@ -252,8 +287,17 @@
                 material = new THREE.MeshBasicMaterial({ color: 0x04e252 });
             }
             let cube2 = new THREE.Mesh(geometry, material);
+            cube2.name = "viande"
+            if (elementSelected === "gruyere") {
+                cube2.name = "gruyere"
+            }
+            else if (elementSelected === "tomate") {
+                cube2.name = "tomate"
+            }
+            else if (elementSelected === "salade") {
+                cube2.name = "salade"
+            }
             listeCubeThree.push(cube2)
-            cube2.name = "test"
             scene.add(cube2);
         }
 
