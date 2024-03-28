@@ -57,6 +57,17 @@
         * {
             color: white;
         }
+
+        #cuissonTacos {
+            text-align: center;
+            border: #ffffff 2px solid;
+            border-radius: 5px;
+            top: 10px;
+            left: 50%;
+            padding: 5px;
+            position: absolute;
+            transform: translate(-50%, 0%);
+        }
     </style>
     <div id="listeActions">
         <div id="listeNourriture">
@@ -77,6 +88,9 @@
             Finir
         </div>
     </div>
+    <div id="cuissonTacos">
+        Cuire le tacos
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cannon@0.6.2/build/cannon.js"></script>
     <script src="DragControls.js"></script>
@@ -90,17 +104,74 @@
 
         document.getElementById("formerTacosBouton").addEventListener("click", newTacos)
 
+        document.getElementById("cuissonTacos").addEventListener("mousedown", startTimerCuisson);
+        document.getElementById("cuissonTacos").addEventListener("mouseup", stopTimer);
+        var intervalId;
+        var temps = 0; //en dixieme de seconde pour + de precision
+        let timerInterval;
+        let startTime = 0;
+        function startTimerCuisson() {
+            intervalId = setInterval(function() {
+                temps += 1;
+                console.log(temps);
+            }, 100);
+        }
+
+        function stopTimer() {
+            clearInterval(intervalId);
+        }
+
         function newTacos() {
+            clearInterval(timerInterval);
+            noterTacos()
             let obj
             for( var i = scene.children.length - 1; i >= 0; i--) { 
                 obj = scene.children[i];
                 if (obj.name === "test") {
                     scene.remove(obj); 
-                    console.log(obj);
                 }
             }
-            elementSelected = "viande"   
+            elementSelected = "viande"
+            temps = 0
+            listeCubePhysique = []
+            listeCubeThree = []
         }
+
+        function noterTacos() {
+            let differenceTemps
+            if (temps > 100) {
+                differenceTemps = temps - 100
+            }
+            else {
+                differenceTemps = 100 - temps
+            }
+            let noteCuisson = differenceTemps / 5
+            let nbElementsTacos = detecterCollisions()
+            let nbElementsHorsTacos = listeCubePhysique.length - nbElementsTacos
+            let currentTime = Date.now() - startTime
+            console.log("TEMPS " + currentTime);
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            //timerInterval = setInterval(updateTimer, 100);
+        }
+
+        function detecterCollisions() {
+            let nombreCollisions = 0;
+            let circlePosition = circle.position;
+            for (let i = 0; i < listeCubePhysique.length; i++) {
+                let cubePosition = listeCubeThree[i].position;
+                let distance = circlePosition.distanceTo(cubePosition);
+                let combinedRadius = 1 + 0.1; // rayon du cercle + rayon du cube
+                if (distance < combinedRadius) {
+                    nombreCollisions++;
+                }
+            }
+            console.log(nombreCollisions);
+            return nombreCollisions;
+        }
+
 
         function newElementSelected(element) {
             document.getElementById("salade").classList = []
@@ -164,6 +235,9 @@
             cubeBody.addShape(cubeShape);
             console.log(cube.position);
             cubeBody.position.set(cube.position.x, cube.position.y, 5);
+            if (listeCubePhysique.length === 0) {
+                startTimer()
+            }
             listeCubePhysique.push(cubeBody)
             world.addBody(cubeBody);
             let geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
