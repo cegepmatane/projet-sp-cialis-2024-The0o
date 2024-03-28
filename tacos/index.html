@@ -58,7 +58,7 @@
         });
 
         function createNewCube() {
-            let cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
+            let cubeShape = new CANNON.Box(new CANNON.Vec3(0.1, 0.1, 0.1));
             let cubeBody = new CANNON.Body({ mass: 1 });
             cubeBody.addShape(cubeShape);
             console.log(cube.position);
