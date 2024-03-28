@@ -11,12 +11,20 @@
             position: absolute;
             bottom: 0;
             width: 100%;
+            display: grid;
+            grid-template-columns: 80% 20%;
         }
 
         #listeNourriture {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(5, 20%);
+            grid-template-columns: repeat(4, 25%);
+        }
+
+        #formerTacosBouton {
+            text-align: center;
+            border: #ffffff 2px solid;
+            border-radius: 5px;
         }
 
         #listeNourriture div {
@@ -65,6 +73,9 @@
                 Salade
             </div>
         </div>
+        <div id="formerTacosBouton">
+            Finir
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cannon@0.6.2/build/cannon.js"></script>
@@ -76,6 +87,20 @@
         document.getElementById("tomate").addEventListener("click", newElementSelected)
         document.getElementById("viande").addEventListener("click", newElementSelected)
         document.getElementById("gruyere").addEventListener("click", newElementSelected)
+
+        document.getElementById("formerTacosBouton").addEventListener("click", newTacos)
+
+        function newTacos() {
+            let obj
+            for( var i = scene.children.length - 1; i >= 0; i--) { 
+                obj = scene.children[i];
+                if (obj.name === "test") {
+                    scene.remove(obj); 
+                    console.log(obj);
+                }
+            }
+            elementSelected = "viande"   
+        }
 
         function newElementSelected(element) {
             document.getElementById("salade").classList = []
@@ -154,6 +179,7 @@
             }
             let cube2 = new THREE.Mesh(geometry, material);
             listeCubeThree.push(cube2)
+            cube2.name = "test"
             scene.add(cube2);
         }
 
