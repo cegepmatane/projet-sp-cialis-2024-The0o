@@ -87,3 +87,22 @@
     font-family: "Montserrat", sans-serif;
     text-align: center;
 }
+
+#noteTacos {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffffaa;
+    position: absolute;
+    top: 0;
+    display: none;
+}
+
+#noteTacos * {
+    color: black;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+}
