@@ -14,6 +14,15 @@ var temps = 0; //en dixieme de seconde pour + de precision
 let timerInterval;
 let startTime = 0;
 
+function showRegles() {
+    if (document.getElementById("popup").style.display === "block") {
+        document.getElementById("popup").style.display = "none"
+    }
+    else {
+        document.getElementById("popup").style.display = "block"
+    }
+}
+
 function startTimerCuisson() {
     intervalId = setInterval(function() {
         temps += 1;
