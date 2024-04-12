@@ -71,12 +71,6 @@ function noterTacos() {
     let noteCuisson = 20 - (differenceTemps / 5)
     let noteHarmonie = harmonie
     let noteTotal = noteElementsTacos + noteElementsHorsTacos + noteTemps + noteCuisson + noteHarmonie
-    console.log("La note est de " + noteTotal);
-    console.log("noteElementsTacos", noteElementsTacos);
-    console.log("noteElementsHorsTacos", noteElementsHorsTacos);
-    console.log("noteTemps", noteTemps);
-    console.log("noteCuisson", noteCuisson);
-    console.log("noteHarmonie", noteHarmonie);
     document.getElementById("noteTacos").style.display = "block"
     document.getElementById("noteTotale").innerText = "La note totale du tacos est de " + noteTotal + "/100"
     document.getElementById("noteElementsTacos").innerText = "La note pour le nombre d'éléments dans le tacos est de " + noteElementsTacos + "/20"
@@ -130,7 +124,6 @@ function getHarmonie() {
 
 function startTimer() {
     startTime = Date.now();
-    //timerInterval = setInterval(updateTimer, 100);
 }
 
 function detecterCollisions() {
@@ -139,7 +132,7 @@ function detecterCollisions() {
     for (let i = 0; i < listeCubePhysique.length; i++) {
         let cubePosition = listeCubeThree[i].position;
         let distance = circlePosition.distanceTo(cubePosition);
-        let combinedRadius = 1 + 0.1; // rayon du cercle + rayon du cube
+        let combinedRadius = 1 + 0.1;
         if (distance < combinedRadius) {
             nombreCollisions++;
         }
@@ -171,12 +164,6 @@ var groundBody = new CANNON.Body({ mass: 0 });
 groundBody.addShape(groundShape);
 groundBody.position.set(100, 100, 100);
 world.addBody(groundBody);
-
-/*var cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5));
-var cubeBody = new CANNON.Body({ mass: 1 });
-cubeBody.addShape(cubeShape);
-cubeBody.position.set(0, 1, 5);
-world.addBody(cubeBody);*/
 
 var geometry = new THREE.BoxGeometry();
 var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
@@ -256,40 +243,3 @@ function animate() {
 }
 
 animate();
-document.addEventListener('DOMContentLoaded', function() {
-// Attachez l'événement mousedown à l'élément de rendu
-renderer.domElement.addEventListener('mousedown', onMouseDown);
-});
-// Définissez une variable globale pour contrôler si le bouton droit est enfoncé
-let rightMouseDown = false;
-
-function onMouseDown(event) {
-// Vérifiez si le bouton enfoncé est le bouton droit (2 pour le bouton droit)
-console.log("test");
-if (event.button === 2) {
-rightMouseDown = true;
-// Lancez une fonction pour ajouter des cubes continuellement
-addCubesContinuously();
-}
-}
-
-// Ajoutez un événement mouseup pour arrêter l'ajout de cubes lorsque le bouton est relâché
-renderer.domElement.addEventListener('mouseup', onMouseUp);
-
-function onMouseUp(event) {
-// Vérifiez si le bouton relâché est le bouton droit
-if (event.button === 2) {
-rightMouseDown = false;
-}
-}
-
-// Fonction pour ajouter des cubes continuellement jusqu'à ce que le bouton soit relâché
-function addCubesContinuously() {
-// Vérifiez si le bouton droit est toujours enfoncé
-if (rightMouseDown) {
-// Ajoutez un cube à chaque itération
-createNewCube();
-// Utilisez requestAnimationFrame pour appeler récursivement la fonction
-requestAnimationFrame(addCubesContinuously);
-}
-}
