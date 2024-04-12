@@ -78,9 +78,9 @@ function noterTacos() {
     console.log("noteCuisson", noteCuisson);
     console.log("noteHarmonie", noteHarmonie);
     document.getElementById("noteTacos").style.display = "block"
-    document.getElementById("noteTotale").innerText = "La note totale du tacos est de " + noteTotal + "/20"
+    document.getElementById("noteTotale").innerText = "La note totale du tacos est de " + noteTotal + "/100"
     document.getElementById("noteElementsTacos").innerText = "La note pour le nombre d'éléments dans le tacos est de " + noteElementsTacos + "/20"
-    document.getElementById("noteElementsHorsTacos").innerText = "La note pour la proprete de la cuisine est de " + noteElementsHorsTacos + "/20"
+    document.getElementById("noteElementsHorsTacos").innerText = "La note pour la propreté de la cuisine est de " + noteElementsHorsTacos + "/20"
     document.getElementById("noteCuisson").innerText = "La note pour le temps de cuisson du tacos est de " + noteCuisson + "/20"
     document.getElementById("noteHarmonie").innerText = "La note pour l'harmonie des ingrédients est de " + noteHarmonie + "/20"
     document.getElementById("noteTemps").innerText = "La note pour le temps de réalisation du tacos est de " + noteTemps + "/20"
