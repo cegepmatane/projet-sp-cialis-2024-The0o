@@ -84,6 +84,10 @@ function noterTacos() {
     document.getElementById("noteCuisson").innerText = "La note pour le temps de cuisson du tacos est de " + noteCuisson + "/20"
     document.getElementById("noteHarmonie").innerText = "La note pour l'harmonie des ingrédients est de " + noteHarmonie + "/20"
     document.getElementById("noteTemps").innerText = "La note pour le temps de réalisation du tacos est de " + noteTemps + "/20"
+    document.getElementById("salade").classList = []
+    document.getElementById("tomate").classList = []
+    document.getElementById("viande").classList = ["selected"]
+    document.getElementById("gruyere").classList = []
 }
 
 function fermerPopup() {
